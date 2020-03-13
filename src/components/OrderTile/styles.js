@@ -14,7 +14,7 @@ export const OrderHeader = styled.View`
 `;
 
 export const OrderHeaderTitle = styled.Text`
-  color: #7d40e7;
+  color: ${props => (props.delivered ? '#2CA42B' : '#7d40e7')};
   margin-left: 10px;
   font-size: 14px;
   font-weight: bold;

@@ -18,26 +18,6 @@ export function orderFetchAllFailure() {
   };
 }
 
-export function orderFetchRequest(id) {
-  return {
-    type: '@order/FETCH_REQUEST',
-    payload: {id},
-  };
-}
-
-export function orderFetchSuccess(data) {
-  return {
-    type: '@order/FETCH_SUCCESS',
-    payload: {...data},
-  };
-}
-
-export function orderFetchFailure() {
-  return {
-    type: '@order/FETCH_FAILURE',
-  };
-}
-
 export function orderUpdateRequest(id, data) {
   return {
     type: '@order/UPDATE_REQUEST',

@@ -22,11 +22,19 @@ import {
 } from './styles';
 
 export default function OrderTile({order, navigation}) {
+  const orderComplete = order.end_date !== null;
+
   return (
     <OrderTileContainer>
       <OrderHeader>
-        <Icon name="local-shipping" color="#7d40e7" size={21} />
-        <OrderHeaderTitle>Order #{order.id}</OrderHeaderTitle>
+        <Icon
+          name="local-shipping"
+          color={orderComplete ? '#2CA42B' : '#7d40e7'}
+          size={21}
+        />
+        <OrderHeaderTitle delivered={orderComplete}>
+          Order #{order.id}
+        </OrderHeaderTitle>
       </OrderHeader>
       <OrderStatus>
         <OrderStatusFlex>
@@ -56,7 +64,7 @@ export default function OrderTile({order, navigation}) {
         </OrderFooterInfo>
         <OrderFooterAction>
           <OrderDetailsButton
-            onPress={() => navigation.navigate('Order Details')}>
+            onPress={() => navigation.navigate('Order Details', {order})}>
             <OrderDetailsButtonText>Details</OrderDetailsButtonText>
           </OrderDetailsButton>
         </OrderFooterAction>

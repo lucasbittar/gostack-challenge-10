@@ -14,13 +14,6 @@ export default function order(state = INITIAL_STATE, action) {
         draft.ordersTotal = action.payload.count;
         break;
       }
-      /*
-      case '@order/FETCH_SUCCESS': {
-        draft.product = action.payload.product;
-        draft.deliveryman = action.payload.deliveryman_id;
-        draft.recipient = action.payload.recipient_id;
-        break;
-      }
       case '@order/UPDATE_REQUEST': {
         draft.saving = true;
         break;
@@ -29,7 +22,6 @@ export default function order(state = INITIAL_STATE, action) {
         draft.saving = false;
         break;
       }
-      */
       default:
     }
   });

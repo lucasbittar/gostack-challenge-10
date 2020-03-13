@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
+import {StatusBar, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -28,20 +30,29 @@ import {orderFetchAllRequest} from '~/store/modules/order/actions';
 
 export default function OrdersList({navigation}) {
   const [page, setPage] = useState(1);
+  const [ordersFilter, setOrdersFilter] = useState('pending');
   const user = useSelector(state => state.user.profile);
   const dispatch = useDispatch();
   const orders = useSelector(state => state.order.orders);
 
-  useEffect(() => {
-    async function fetchOrders() {
-      const ordersParams = {
-        page,
-        deliveryman_id: user.id,
-      };
-      dispatch(orderFetchAllRequest(ordersParams));
-    }
-    fetchOrders();
-  }, [page, dispatch]);
+  async function fetchOrders() {
+    const ordersParams = {
+      page,
+      deliveryman_id: user.id,
+      status: ordersFilter,
+    };
+    dispatch(orderFetchAllRequest(ordersParams));
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle('dark-content');
+      Platform.OS === 'android' && StatusBar.setBackgroundColor('#fff');
+
+      /* Fetch orders everytime view is loaded */
+      fetchOrders();
+    }, [page, ordersFilter]),
+  );
 
   function handleLogout() {
     dispatch(logOut());
@@ -51,32 +62,56 @@ export default function OrdersList({navigation}) {
     return <OrderTile order={item} navigation={navigation} />;
   }
 
+  function toggleFilter(status) {
+    setOrdersFilter(status);
+  }
+
   return (
     <Container>
-      <ProfileHeader>
-        <ProfileAvatar profile={user} />
-        <ProfileInfo>
-          <ProfileWelcome>Welcome back,</ProfileWelcome>
-          <ProfileName>{user.name}</ProfileName>
-        </ProfileInfo>
-        <LogoutButton onPress={handleLogout}>
-          <Icon name="exit-to-app" size={26} color="#E74040" />
-        </LogoutButton>
-      </ProfileHeader>
+      {user !== null && (
+        <ProfileHeader>
+          <ProfileAvatar profile={user} />
+          <ProfileInfo>
+            <ProfileWelcome>Welcome back,</ProfileWelcome>
+            <ProfileName>{user.name}</ProfileName>
+          </ProfileInfo>
+          <LogoutButton onPress={handleLogout}>
+            <Icon name="exit-to-app" size={26} color="#E74040" />
+          </LogoutButton>
+        </ProfileHeader>
+      )}
       <OrdersHeader>
         <OrdersHeaderTitle>Orders</OrdersHeaderTitle>
         <OrdersFilter>
-          <OrdersFilterButton active>
-            <OrdersFilterButtonText active>Pending</OrdersFilterButtonText>
+          <OrdersFilterButton
+            onPress={() => toggleFilter('pending')}
+            active={ordersFilter === 'pending'}
+            color="#7d40e7">
+            <OrdersFilterButtonText
+              active={ordersFilter === 'pending'}
+              color="#7d40e7">
+              Pending
+            </OrdersFilterButtonText>
           </OrdersFilterButton>
-          <OrdersFilterButton>
-            <OrdersFilterButtonText>Complete</OrdersFilterButtonText>
+          <OrdersFilterButton
+            onPress={() => toggleFilter('delivered')}
+            active={ordersFilter === 'delivered'}
+            color="#2CA42B">
+            <OrdersFilterButtonText
+              active={ordersFilter === 'delivered'}
+              color="#2CA42B">
+              Delivered
+            </OrdersFilterButtonText>
           </OrdersFilterButton>
         </OrdersFilter>
       </OrdersHeader>
       <OrdersFlatList
         vertical
+        contentContainerStyle={{paddingBottom: 30}}
         data={orders}
+        ListEmptyComponent={
+          <Text style={{color: '#999'}}>No orders were found</Text>
+        }
         extraData={this.props}
         keyExtractor={item => String(item.id)}
         renderItem={renderOrderTile}

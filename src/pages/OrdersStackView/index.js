@@ -1,17 +1,30 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import OrdersList from '~/pages/OrdersList';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import OrderDetails from '~/pages/OrderDetails';
+import OrderListIssues from '~/pages/OrderListIssues';
+import OrderReportIssue from '~/pages/OrderReportIssue';
+import OrdersList from '~/pages/OrdersList';
 
 const OrdersStack = createStackNavigator();
 
-const orderDetailsOptions = {
+const orderInnerViews = ({navigation}) => ({
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={{marginLeft: 15}}>
+      <Icon name="chevron-left" color="#fff" size={24} />
+    </TouchableOpacity>
+  ),
   headerStyle: {
     backgroundColor: '#7D40E7',
   },
+  headerTransparent: true,
   headerTintColor: '#fff',
-};
+});
 
 export default function OrdersStackView() {
   return (
@@ -23,10 +36,26 @@ export default function OrdersStackView() {
       />
       <OrdersStack.Screen
         name="Order Details"
-        options={orderDetailsOptions}
+        options={orderInnerViews}
         component={OrderDetails}
       />
+      <OrdersStack.Screen
+        name="Report Issue"
+        options={orderInnerViews}
+        component={OrderReportIssue}
+      />
+      <OrdersStack.Screen
+        name="List Issues"
+        options={orderInnerViews}
+        component={OrderListIssues}
+      />
+      {/*
+      <OrdersStack.Screen
+        name="Confirm Delivery"
+        options={orderInnerViews}
+        component={OrderConfirm}
+      />
+      */}
     </OrdersStack.Navigator>
   );
 }
-

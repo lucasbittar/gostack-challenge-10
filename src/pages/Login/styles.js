@@ -27,28 +27,3 @@ export const Logo = styled.Image.attrs({
 export const Form = styled.View`
   width: 100%;
 `;
-
-export const Input = styled.TextInput.attrs({placeholderTextColor: '#999'})`
-  height: 45px;
-  margin-bottom: 20px;
-  background: #eee;
-  font-size: 16px;
-  border-radius: 4px;
-  padding: 0 15px;
-  border: 1px solid #eee;
-`;
-
-export const SubmitButton = styled(RectButton)`
-  height: 45px;
-  justify-content: center;
-  align-items: center;
-  background: #82bf18;
-  border-radius: 4px;
-  padding: 0 12px;
-`;
-
-export const SubmitButtonText = styled.Text`
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-`;

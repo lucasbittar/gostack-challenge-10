@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   padding-top: 30px;
+  background: #fff;
 `;
 
 export const ProfileHeader = styled.View`
@@ -36,7 +37,7 @@ export const OrdersFlatList = styled.FlatList`
   padding: 30px;
   padding-top: 10px;
   margin-top: 10px;
-  height: 77%;
+  height: 80%;
 `;
 
 export const OrdersHeader = styled.View`
@@ -60,13 +61,13 @@ export const OrdersFilter = styled.View`
 
 export const OrdersFilterButton = styled.TouchableOpacity`
   margin-left: 20px;
-  border-bottom-color: ${props => (props.active ? '#7d40e7' : 'transparent')};
+  border-bottom-color: ${props => (props.active ? props.color : 'transparent')};
   border-bottom-width: 1px;
   border-style: solid;
 `;
 
 export const OrdersFilterButtonText = styled.Text`
-  color: ${props => (props.active ? '#7d40e7' : '#999')};
+  color: ${props => (props.active ? props.color : '#999')};
   font-size: 12px;
   font-weight: bold;
 `;

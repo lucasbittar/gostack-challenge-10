@@ -2,14 +2,9 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {ActivityIndicator} from 'react-native';
 
-import {
-  Container,
-  Form,
-  Input,
-  SubmitButton,
-  SubmitButtonText,
-  Logo,
-} from './styles';
+import {Container, Form, Logo} from './styles';
+
+import {Input, SubmitButton, SubmitButtonText} from '~/components/Layout';
 
 import {loginRequest} from '~/store/modules/auth/actions';
 
@@ -40,7 +35,7 @@ export default function Login() {
           value={deliveryman_id}
           onChangeText={text => handleInputChange(text)}
         />
-        <SubmitButton loading={loading} onPress={handleSubmit}>
+        <SubmitButton loading={loading} onPress={handleSubmit} color="#82BF18">
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (

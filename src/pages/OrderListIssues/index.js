@@ -4,12 +4,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StatusBar, Text, FlatList} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {issueCreateRequest} from '~/store/modules/issue/actions';
-
 import {Container, ColorStrip} from '~/pages/OrderDetails/styles';
 
 import {
   OrderDetailsContainer,
+  OrderLoadingCard,
   OrderDetailsCard,
   OrderIssuesList,
   OrderIssuesHeader,

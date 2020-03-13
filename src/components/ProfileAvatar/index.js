@@ -13,15 +13,15 @@ const initials = name => {
   return firstInitial;
 };
 
-export default function ProfileAvatar({profile}) {
+export default function ProfileAvatar({profile, large = false}) {
   const {name, avatar} = profile;
   return (
     <Container>
       {avatar !== null ? (
-        <AvatarPicture source={{uri: avatar.url}} />
+        <AvatarPicture source={{uri: avatar.url}} large={large} />
       ) : (
-        <Initials>
-          <InitialsText>{initials(name)}</InitialsText>
+        <Initials large={large}>
+          <InitialsText large={large}>{initials(name)}</InitialsText>
         </Initials>
       )}
     </Container>

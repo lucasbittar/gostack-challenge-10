@@ -26,6 +26,14 @@ export const OrderDetailsCard = styled.View`
   margin-bottom: 10px;
 `;
 
+export const OrderLoadingCard = styled.View`
+  padding: 65px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+`;
+
 export const OrderDetailsCardHeader = styled.View`
   flex-direction: row;
   align-items: center;

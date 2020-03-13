@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import OrderConfirm from '~/pages/OrderConfirm';
 import OrderDetails from '~/pages/OrderDetails';
 import OrderListIssues from '~/pages/OrderListIssues';
 import OrderReportIssue from '~/pages/OrderReportIssue';
@@ -49,13 +50,11 @@ export default function OrdersStackView() {
         options={orderInnerViews}
         component={OrderListIssues}
       />
-      {/*
       <OrdersStack.Screen
         name="Confirm Delivery"
         options={orderInnerViews}
         component={OrderConfirm}
       />
-      */}
     </OrdersStack.Navigator>
   );
 }

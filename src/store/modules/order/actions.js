@@ -18,17 +18,50 @@ export function orderFetchAllFailure() {
   };
 }
 
-export function orderUpdateRequest(id, data) {
+export function orderFetchRequest(id) {
   return {
-    type: '@order/UPDATE_REQUEST',
-    payload: {id, ...data},
+    type: '@order/FETCH_REQUEST',
+    payload: {id},
   };
 }
 
-export function orderUpdateSuccess(id, data) {
+export function orderFetchSuccess(data) {
+  return {
+    type: '@order/FETCH_SUCCESS',
+    payload: {...data},
+  };
+}
+
+export function orderIssuesFetchRequest(id) {
+  return {
+    type: '@order/FETCH_ISSUES_REQUEST',
+    payload: {id},
+  };
+}
+
+export function orderIssuesFetchSuccess(data) {
+  return {
+    type: '@order/FETCH_ISSUES_SUCCESS',
+    payload: data,
+  };
+}
+
+export function orderIssuesFetchFailure(data) {
+  return {
+    type: '@order/FETCH_ISSUES_FAILURE',
+  };
+}
+
+export function orderUpdateRequest(type, data) {
+  return {
+    type: '@order/UPDATE_REQUEST',
+    payload: {type, ...data},
+  };
+}
+
+export function orderUpdateSuccess() {
   return {
     type: '@order/UPDATE_SUCCESS',
-    payload: {id, ...data},
   };
 }
 

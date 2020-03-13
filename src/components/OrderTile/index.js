@@ -11,8 +11,7 @@ import {
   OrderFooterSmall,
   OrderFooterLarge,
   OrderFooterAction,
-  OrderDetailsButton,
-  OrderDetailsButtonText,
+  OrderDetailsText,
   OrderStatus,
   OrderStatusFlex,
   OrderStatusTextFlex,
@@ -25,7 +24,8 @@ export default function OrderTile({order, navigation}) {
   const orderComplete = order.end_date !== null;
 
   return (
-    <OrderTileContainer>
+    <OrderTileContainer
+      onPress={() => navigation.navigate('Order Details', {order})}>
       <OrderHeader>
         <Icon
           name="local-shipping"
@@ -63,10 +63,7 @@ export default function OrderTile({order, navigation}) {
           <OrderFooterLarge>{order.recipient.city}</OrderFooterLarge>
         </OrderFooterInfo>
         <OrderFooterAction>
-          <OrderDetailsButton
-            onPress={() => navigation.navigate('Order Details', {order})}>
-            <OrderDetailsButtonText>Details</OrderDetailsButtonText>
-          </OrderDetailsButton>
+          <OrderDetailsText>Details</OrderDetailsText>
         </OrderFooterAction>
       </OrderFooter>
     </OrderTileContainer>

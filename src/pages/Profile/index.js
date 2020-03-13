@@ -1,18 +1,47 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {format} from 'date-fns';
+import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
 
 import {logOut} from '~/store/modules/auth/actions';
 
+import ProfileAvatar from '~/components/ProfileAvatar';
+import {SubmitButton, SubmitButtonText} from '~/components/Layout';
+
+import {
+  Container,
+  ProfileInfoContainer,
+  ProfileAvatarContainer,
+  ProfileTextSmall,
+  ProfileTextLarge,
+} from './styles';
+
 export default function Profile() {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user.profile);
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Profile</Text>
-      <TouchableOpacity onPress={() => dispatch(logOut())}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
-    </View>
+    <Container>
+      {user !== null && (
+        <>
+          <ProfileAvatarContainer>
+            <ProfileAvatar large profile={user} />
+          </ProfileAvatarContainer>
+          <ProfileInfoContainer>
+            <ProfileTextSmall>Full name</ProfileTextSmall>
+            <ProfileTextLarge>{user.name}</ProfileTextLarge>
+            <ProfileTextSmall>Email</ProfileTextSmall>
+            <ProfileTextLarge>{user.email}</ProfileTextLarge>
+            <ProfileTextSmall>Created on</ProfileTextSmall>
+            <ProfileTextLarge>
+              {format(new Date(user.created_at), 'MM/dd/yyyy')}
+            </ProfileTextLarge>
+          </ProfileInfoContainer>
+        </>
+      )}
+      <SubmitButton onPress={() => dispatch(logOut())} color="#E74040">
+        <SubmitButtonText>Logout</SubmitButtonText>
+      </SubmitButton>
+    </Container>
   );
 }
 

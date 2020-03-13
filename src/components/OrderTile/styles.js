@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const OrderTileContainer = styled.View`
+export const OrderTileContainer = styled.TouchableOpacity`
   margin-bottom: 30px;
   border-radius: 4px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
@@ -50,12 +50,7 @@ export const OrderFooterAction = styled.View`
   justify-content: flex-end;
 `;
 
-export const OrderDetailsButton = styled.TouchableOpacity`
-  align-items: center;
-  justify-content: center;
-`;
-
-export const OrderDetailsButtonText = styled.Text`
+export const OrderDetailsText = styled.Text`
   color: #7d40e7;
   font-size: 12px;
   font-weight: bold;

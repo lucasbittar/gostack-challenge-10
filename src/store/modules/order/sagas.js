@@ -5,6 +5,10 @@ import api from '~/services/api';
 import {
   orderFetchAllSuccess,
   orderFetchAllFailure,
+  orderFetchSuccess,
+  orderFetchFailure,
+  orderIssuesFetchSuccess,
+  orderIssuesFetchFailure,
   orderUpdateSuccess,
   orderUpdateFailure,
 } from './actions';
@@ -27,17 +31,55 @@ export function* fetchAllOrders({payload}) {
   }
 }
 
+export function* fetchOrder({payload}) {
+  try {
+    const {id} = payload;
+
+    const response = yield call(api.get, `orders/${id}`);
+
+    yield put(orderFetchSuccess(response.data));
+  } catch (err) {
+    yield put(orderFetchFailure());
+  }
+}
+
+export function* fetchOrderIssues({payload}) {
+  try {
+    const {id} = payload;
+
+    const response = yield call(api.get, `/order/${id}/issues`);
+
+    yield put(orderIssuesFetchSuccess(response.data));
+  } catch (err) {
+    yield put(orderIssuesFetchFailure());
+  }
+}
+
 export function* updateOrder({payload}) {
   try {
-    const {id, product, deliveryman_id, recipient_id} = payload;
+    console.tron.log('PAYLOAD', payload);
+    const {id, type, deliveryman_id} = payload;
+    let orderData = {};
 
-    const response = yield call(api.put, `orders/${id}`, {
-      recipient_id,
-      deliveryman_id,
-      product,
-    });
+    if (type === 'confirm') {
+      const {signature_id} = payload;
+      orderData = {
+        signature_id,
+        end_date: new Date(),
+      };
+    } else {
+      orderData = {
+        start_date: new Date(),
+      };
+    }
 
-    yield put(orderUpdateSuccess(response.data));
+    const response = yield call(
+      api.put,
+      `deliveryman/${deliveryman_id}/orders/${id}`,
+      orderData,
+    );
+
+    yield put(orderUpdateSuccess());
   } catch (err) {
     yield put(orderUpdateFailure());
   }
@@ -45,5 +87,7 @@ export function* updateOrder({payload}) {
 
 export default all([
   takeLatest('@order/FETCH_ALL_REQUEST', fetchAllOrders),
+  takeLatest('@order/FETCH_REQUEST', fetchOrder),
+  takeLatest('@order/FETCH_ISSUES_REQUEST', fetchOrderIssues),
   takeLatest('@order/UPDATE_REQUEST', updateOrder),
 ]);

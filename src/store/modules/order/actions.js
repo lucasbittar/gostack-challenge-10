@@ -32,6 +32,12 @@ export function orderFetchSuccess(data) {
   };
 }
 
+export function orderFetchFailure() {
+  return {
+    type: '@order/FETCH_FAILURE',
+  };
+}
+
 export function orderIssuesFetchRequest(id) {
   return {
     type: '@order/FETCH_ISSUES_REQUEST',

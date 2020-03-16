@@ -43,6 +43,10 @@ export default function order(state = INITIAL_STATE, action) {
         draft.success = true;
         break;
       }
+      case '@order/UPDATE_FAILURE': {
+        draft.loading = false;
+        break;
+      }
       default:
     }
   });

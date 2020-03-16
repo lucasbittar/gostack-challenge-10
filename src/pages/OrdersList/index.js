@@ -58,8 +58,10 @@ export default function OrdersList({navigation}) {
     dispatch(logOut());
   }
 
-  function renderOrderTile({item}) {
-    return <OrderTile order={item} navigation={navigation} />;
+  function renderOrderTile(item) {
+    return (
+      <OrderTile index={item.index} order={item.item} navigation={navigation} />
+    );
   }
 
   function toggleFilter(status) {

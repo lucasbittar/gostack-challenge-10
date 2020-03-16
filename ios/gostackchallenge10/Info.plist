@@ -57,5 +57,11 @@
   <array>
     <string>MaterialIcons.ttf</string>
   </array>
+  <!-- Required with iOS 10 and higher -->
+  <key>NSCameraUsageDescription</key>
+  <string>Allow application to use the camera?</string>
+  <!-- Required with iOS 11 and higher: include this only if you are planning to use the camera roll -->
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Allow application to use the photo library?</string>
 </dict>
 </plist>

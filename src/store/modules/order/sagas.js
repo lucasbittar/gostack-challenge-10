@@ -1,6 +1,7 @@
 import {takeLatest, call, put, all} from 'redux-saga/effects';
 
 import api from '~/services/api';
+import errorHandling from '~/utils/errorHandling';
 
 import {
   orderFetchAllSuccess,
@@ -27,6 +28,7 @@ export function* fetchAllOrders({payload}) {
 
     yield put(orderFetchAllSuccess(response.data));
   } catch (err) {
+    errorHandling(err);
     yield put(orderFetchAllFailure());
   }
 }
@@ -39,6 +41,7 @@ export function* fetchOrder({payload}) {
 
     yield put(orderFetchSuccess(response.data));
   } catch (err) {
+    errorHandling(err);
     yield put(orderFetchFailure());
   }
 }
@@ -51,13 +54,13 @@ export function* fetchOrderIssues({payload}) {
 
     yield put(orderIssuesFetchSuccess(response.data));
   } catch (err) {
+    errorHandling(err);
     yield put(orderIssuesFetchFailure());
   }
 }
 
 export function* updateOrder({payload}) {
   try {
-    console.tron.log('PAYLOAD', payload);
     const {id, type, deliveryman_id} = payload;
     let orderData = {};
 
@@ -73,7 +76,7 @@ export function* updateOrder({payload}) {
       };
     }
 
-    const response = yield call(
+    yield call(
       api.put,
       `deliveryman/${deliveryman_id}/orders/${id}`,
       orderData,
@@ -81,6 +84,7 @@ export function* updateOrder({payload}) {
 
     yield put(orderUpdateSuccess());
   } catch (err) {
+    errorHandling(err);
     yield put(orderUpdateFailure());
   }
 }

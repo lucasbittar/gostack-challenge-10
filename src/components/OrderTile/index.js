@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {Animated} from 'react-native';
 import {format} from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -20,52 +21,80 @@ import {
   OrderStatusText,
 } from './styles';
 
-export default function OrderTile({order, navigation}) {
+const ANIMATION_DURATION = 300;
+const ANIMATION_DELAY = 100;
+
+export default function OrderTile({index, order, navigation}) {
   const orderComplete = order.end_date !== null;
+  const [animated] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(animated, {
+      toValue: 1,
+      duration: ANIMATION_DURATION,
+      delay: index * ANIMATION_DELAY,
+    }).start();
+  }, [order]);
+
+  const tileStyles = [
+    {opacity: animated},
+    {
+      transform: [
+        {
+          translateY: animated.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['25px', '0px'],
+          }),
+        },
+      ],
+    },
+  ];
 
   return (
-    <OrderTileContainer
-      onPress={() => navigation.navigate('Order Details', {order})}>
-      <OrderHeader>
-        <Icon
-          name="local-shipping"
-          color={orderComplete ? '#2CA42B' : '#7d40e7'}
-          size={21}
-        />
-        <OrderHeaderTitle delivered={orderComplete}>
-          Order #{order.id}
-        </OrderHeaderTitle>
-      </OrderHeader>
-      <OrderStatus>
-        <OrderStatusFlex>
-          <OrderStatusLine />
-          <OrderStatusIndicator active />
-          <OrderStatusIndicator active={order.start_date !== null} />
-          <OrderStatusIndicator active={order.end_date !== null} />
-        </OrderStatusFlex>
-        <OrderStatusTextFlex>
-          <OrderStatusText>Waiting for pickup</OrderStatusText>
-          <OrderStatusText>In Transit</OrderStatusText>
-          <OrderStatusText>Delivered</OrderStatusText>
-        </OrderStatusTextFlex>
-      </OrderStatus>
-      <OrderFooter>
-        <OrderFooterInfo>
-          <OrderFooterSmall>Date</OrderFooterSmall>
-          <OrderFooterLarge>
-            {order.start_date !== null
-              ? format(new Date(order.start_date), 'MM/dd/yyyy')
-              : 'Not started'}
-          </OrderFooterLarge>
-        </OrderFooterInfo>
-        <OrderFooterInfo>
-          <OrderFooterSmall>City</OrderFooterSmall>
-          <OrderFooterLarge>{order.recipient.city}</OrderFooterLarge>
-        </OrderFooterInfo>
-        <OrderFooterAction>
-          <OrderDetailsText>Details</OrderDetailsText>
-        </OrderFooterAction>
-      </OrderFooter>
-    </OrderTileContainer>
+    <Animated.View style={tileStyles}>
+      <OrderTileContainer
+        onPress={() => navigation.navigate('Order Details', {order})}>
+        <OrderHeader>
+          <Icon
+            name="local-shipping"
+            color={orderComplete ? '#2CA42B' : '#7d40e7'}
+            size={21}
+          />
+          <OrderHeaderTitle delivered={orderComplete}>
+            Order #{order.id}
+          </OrderHeaderTitle>
+        </OrderHeader>
+        <OrderStatus>
+          <OrderStatusFlex>
+            <OrderStatusLine />
+            <OrderStatusIndicator active />
+            <OrderStatusIndicator active={order.start_date !== null} />
+            <OrderStatusIndicator active={order.end_date !== null} />
+          </OrderStatusFlex>
+          <OrderStatusTextFlex>
+            <OrderStatusText>Waiting for pickup</OrderStatusText>
+            <OrderStatusText>In Transit</OrderStatusText>
+            <OrderStatusText>Delivered</OrderStatusText>
+          </OrderStatusTextFlex>
+        </OrderStatus>
+        <OrderFooter>
+          <OrderFooterInfo>
+            <OrderFooterSmall>Date</OrderFooterSmall>
+            <OrderFooterLarge>
+              {order.start_date !== null
+                ? format(new Date(order.start_date), 'MM/dd/yyyy')
+                : 'Not started'}
+            </OrderFooterLarge>
+          </OrderFooterInfo>
+          <OrderFooterInfo>
+            <OrderFooterSmall>City</OrderFooterSmall>
+            <OrderFooterLarge>{order.recipient.city}</OrderFooterLarge>
+          </OrderFooterInfo>
+          <OrderFooterAction>
+            <OrderDetailsText>Details</OrderDetailsText>
+          </OrderFooterAction>
+        </OrderFooter>
+      </OrderTileContainer>
+    </Animated.View>
   );
 }

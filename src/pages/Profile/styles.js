@@ -4,7 +4,7 @@ export const Container = styled.View`
   flex: 1;
   background: #fff;
   justify-content: center;
-  padding: 30px;
+  padding: 20px;
 `;
 
 export const ProfileAvatarContainer = styled.View`

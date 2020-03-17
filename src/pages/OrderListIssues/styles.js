@@ -1,11 +1,20 @@
 import styled from 'styled-components/native';
 
+export const Container = styled.View`
+  position: relative;
+  flex: 1;
+`;
+
 export const OrderDetailsCard = styled.View`
   padding: 20px;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 15px;
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
 `;
 
 export const OrderIssuesHeader = styled.Text`
@@ -28,7 +37,7 @@ export const OrderIssueDate = styled.Text`
 `;
 
 export const OrderDetailsContainer = styled.View`
-  margin-top: -110px;
+  margin-top: -410px;
 `;
 
 export const OrderIssuesList = styled.FlatList`

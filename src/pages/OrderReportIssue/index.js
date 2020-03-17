@@ -4,6 +4,7 @@ import {StatusBar, ActivityIndicator} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {issueCreateRequest} from '~/store/modules/issue/actions';
+import {statusbarUpdateColor} from '~/store/modules/statusbar/actions';
 
 import {
   Container,
@@ -32,6 +33,7 @@ export default function OrderReportIssue({route, navigation}) {
     useCallback(() => {
       StatusBar.setBarStyle('light-content');
       Platform.OS === 'android' && StatusBar.setBackgroundColor('#7d40e7');
+      dispatch(statusbarUpdateColor('#7d40e7'));
     }, []),
   );
 
@@ -59,6 +61,7 @@ export default function OrderReportIssue({route, navigation}) {
             multiline
             noPadding
             noBorder
+            alignTextTop
             height={200}
             transparent
             numberOfLines={15}

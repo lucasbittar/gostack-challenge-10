@@ -36,17 +36,19 @@ export default function OrderTile({index, order, navigation}) {
     }).start();
   }, [order]);
 
+  const styleTransform = [
+    {
+      translateY: animated.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['25px', '0px'],
+      }),
+    },
+  ];
+
   const tileStyles = [
     {opacity: animated},
     {
-      transform: [
-        {
-          translateY: animated.interpolate({
-            inputRange: [0, 1],
-            outputRange: ['25px', '0px'],
-          }),
-        },
-      ],
+      transform: Platform.OS === 'ios' ? styleTransform : [],
     },
   ];
 

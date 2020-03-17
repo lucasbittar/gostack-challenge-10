@@ -4,11 +4,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StatusBar, Text, FlatList} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {Container, ColorStrip} from '~/pages/OrderDetails/styles';
+import {ColorStrip} from '~/pages/OrderDetails/styles';
+
+import {statusbarUpdateColor} from '~/store/modules/statusbar/actions';
 
 import {
+  Container,
   OrderDetailsContainer,
-  OrderLoadingCard,
   OrderDetailsCard,
   OrderIssuesList,
   OrderIssuesHeader,
@@ -16,15 +18,15 @@ import {
   OrderIssueDate,
 } from './styles';
 
-export default function OrderListIssues({route, navigation}) {
+export default function OrderListIssues({route}) {
   const {order, issues} = route.params;
-
   const dispatch = useDispatch();
 
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('light-content');
       Platform.OS === 'android' && StatusBar.setBackgroundColor('#7d40e7');
+      dispatch(statusbarUpdateColor('#7d40e7'));
     }, []),
   );
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, SafeAreaView} from 'react-native';
 
 import {Container, Form, Logo} from './styles';
 
@@ -24,25 +24,30 @@ export default function Login() {
   }
 
   return (
-    <Container>
-      <Logo />
-      <Form>
-        <Input
-          autoCorrect={false}
-          autoCapitaliza="none"
-          placeholder="Type in your ID"
-          returnKeyType="send"
-          value={deliveryman_id}
-          onChangeText={text => handleInputChange(text)}
-        />
-        <SubmitButton loading={loading} onPress={handleSubmit} color="#82BF18">
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <SubmitButtonText>Access Dashboard</SubmitButtonText>
-          )}
-        </SubmitButton>
-      </Form>
-    </Container>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#7d40e7'}}>
+      <Container>
+        <Logo />
+        <Form>
+          <Input
+            autoCorrect={false}
+            autoCapitaliza="none"
+            placeholder="Type in your ID"
+            returnKeyType="go"
+            value={deliveryman_id}
+            onChangeText={text => handleInputChange(text)}
+          />
+          <SubmitButton
+            loading={loading}
+            onPress={handleSubmit}
+            color="#82BF18">
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <SubmitButtonText>Access Dashboard</SubmitButtonText>
+            )}
+          </SubmitButton>
+        </Form>
+      </Container>
+    </SafeAreaView>
   );
 }

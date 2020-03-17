@@ -9,6 +9,8 @@ export const Input = styled.TextInput.attrs({placeholderTextColor: '#999'})`
   font-size: 16px;
   border-radius: 4px;
   padding: 0 15px;
+  justify-content: center;
+  text-align-vertical: ${props => (props.alignTextTop ? 'top' : 'center')};
   border: ${props => (props.noBorder ? 'none' : '1px solid #eee')};
   height: ${props => (props.height ? `${props.height}px` : '45px')};
 

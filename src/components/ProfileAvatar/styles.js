@@ -4,11 +4,14 @@ export const Container = styled.View`
   display: flex;
 `;
 
-export const AvatarPicture = styled.Image`
+export const AvatarPicture = styled.Image.attrs({
+  resizeMethod: 'resize',
+})`
   width: 68px;
   height: 68px;
   border-radius: 34px;
   margin-right: 15px;
+  background: #7d40e7;
 
   ${props =>
     props.large &&

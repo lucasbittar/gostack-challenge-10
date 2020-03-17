@@ -18,6 +18,7 @@ export function* login({payload}) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
     yield put(loginSuccess(token, user));
   } catch (err) {
+    console.log('ERR', err);
     errorHandling(err);
     yield put(loginFailure());
   }

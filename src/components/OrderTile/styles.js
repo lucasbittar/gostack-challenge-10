@@ -3,8 +3,12 @@ import styled from 'styled-components/native';
 export const OrderTileContainer = styled.TouchableOpacity`
   margin-bottom: 30px;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
 `;
 
 export const OrderHeader = styled.View`

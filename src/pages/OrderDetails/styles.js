@@ -1,20 +1,20 @@
 import styled, {css} from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   position: relative;
 `;
 
 export const ColorStrip = styled.View`
-  height: 200px;
+  height: 420px;
   width: 100%;
-  top: 0;
+  top: -310px;
   left: 0;
   background: #7d40e7;
 `;
 
 export const OrderDetailsContainer = styled.View`
-  padding: 24px;
-  margin-top: -110px;
+  padding: 20px;
+  margin-top: -410px;
 `;
 
 export const OrderDetailsCard = styled.View`
@@ -22,16 +22,24 @@ export const OrderDetailsCard = styled.View`
   padding-bottom: 0px;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
 `;
 
 export const OrderLoadingCard = styled.View`
   padding: 65px;
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
 `;
 
 export const OrderDetailsCardHeader = styled.View`
@@ -76,7 +84,11 @@ export const OrderActions = styled.View`
   justify-content: space-between;
   background: #f8f9fd;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
 `;
 
 export const OrderActionButton = styled.TouchableOpacity`

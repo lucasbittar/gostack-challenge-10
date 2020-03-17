@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {format} from 'date-fns';
 import {useDispatch, useSelector} from 'react-redux';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {logOut} from '~/store/modules/auth/actions';
 
 import ProfileAvatar from '~/components/ProfileAvatar';
 import {SubmitButton, SubmitButtonText} from '~/components/Layout';
+
+import {statusbarUpdateColor} from '~/store/modules/statusbar/actions';
 
 import {
   Container,
@@ -19,6 +22,12 @@ import {
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.profile);
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(statusbarUpdateColor('#fff'));
+    }, []),
+  );
   return (
     <Container>
       {user !== null && (

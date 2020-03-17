@@ -1,6 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {StatusBar, Alert, ActivityIndicator, Text} from 'react-native';
+import {
+  StatusBar,
+  Alert,
+  ActivityIndicator,
+  Text,
+  SafeAreaView,
+} from 'react-native';
 import {format} from 'date-fns';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -11,6 +17,7 @@ import {
   orderUpdateRequest,
   orderIssuesFetchRequest,
 } from '~/store/modules/order/actions';
+import {statusbarUpdateColor} from '~/store/modules/statusbar/actions';
 
 import api from '~/services/api';
 
@@ -50,6 +57,8 @@ export default function OrderDetails({route, navigation}) {
     useCallback(() => {
       StatusBar.setBarStyle('light-content');
       Platform.OS === 'android' && StatusBar.setBackgroundColor('#7d40e7');
+
+      dispatch(statusbarUpdateColor('#7d40e7'));
 
       /* Fetch issues everytime the view is loaded */
       dispatch(orderIssuesFetchRequest(id));

@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  padding-top: 30px;
+  padding-top: 20px;
+  height: 100%;
   background: #fff;
 `;
 
@@ -10,8 +11,8 @@ export const ProfileHeader = styled.View`
   align-items: center;
   width: 100%;
   height: 120px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const ProfileInfo = styled.View`
@@ -34,7 +35,7 @@ export const LogoutButton = styled.TouchableOpacity`
 `;
 
 export const OrdersFlatList = styled.FlatList`
-  padding: 30px;
+  padding: 20px;
   padding-top: 10px;
   margin-top: 10px;
   height: 80%;
@@ -45,8 +46,8 @@ export const OrdersHeader = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const OrdersHeaderTitle = styled.Text`
@@ -73,10 +74,14 @@ export const OrdersFilterButtonText = styled.Text`
 `;
 
 export const OrderTile = styled.View`
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  shadow-color: #000;
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.1;
+  shadow-radius: 3px;
+  elevation: 2;
 `;
 
 export const OrderHeader = styled.View`

@@ -32,10 +32,30 @@ import {orderFetchAllRequest} from '~/store/modules/order/actions';
 
 export default function OrdersList({navigation}) {
   const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = useState(false);
   const [ordersFilter, setOrdersFilter] = useState('pending');
   const user = useSelector(state => state.user.profile);
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.order.loading);
   const orders = useSelector(state => state.order.orders);
+  const ordersTotal = useSelector(state => state.order.ordersTotal);
+
+  function fetchMoreOrders() {
+    // console.tron.log('ORDERS!', page, ordersTotal, orders.length);
+    if (orders.length < ordersTotal) {
+      setPage(page + 1);
+      // console.tron.log('FETCH MORE!');
+      fetchOrders();
+    } else {
+      // console.tron.log('LAST PAGE!');
+    }
+  }
+
+  function refreshOrders() {
+    // console.tron.log('REFRESH ORDERS!');
+    setPage(1);
+    fetchOrders();
+  }
 
   async function fetchOrders() {
     const ordersParams = {
@@ -68,6 +88,7 @@ export default function OrdersList({navigation}) {
   }
 
   function toggleFilter(status) {
+    setPage(1);
     setOrdersFilter(status);
   }
 
@@ -111,17 +132,28 @@ export default function OrdersList({navigation}) {
             </OrdersFilterButton>
           </OrdersFilter>
         </OrdersHeader>
-        <OrdersFlatList
-          vertical
-          contentContainerStyle={{paddingBottom: 30}}
-          data={orders}
-          ListEmptyComponent={
-            <Text style={{color: '#999'}}>No orders were found</Text>
-          }
-          extraData={this.props}
-          keyExtractor={item => String(item.id)}
-          renderItem={renderOrderTile}
-        />
+        {loading && page === 1 ? (
+          <Text style={{color: '#999', padding: 20, fontSize: 12}}>
+            Fetching orders...
+          </Text>
+        ) : (
+          <OrdersFlatList
+            vertical
+            contentContainerStyle={{padding: 20}}
+            data={orders}
+            refreshing={refreshing}
+            onRefresh={refreshOrders}
+            onEndReachedThreshold={0.3}
+            onEndReached={fetchMoreOrders}
+            ListEmptyComponent={
+              <Text style={{color: '#999', fontSize: 12}}>
+                No orders were found
+              </Text>
+            }
+            keyExtractor={item => String(item.id)}
+            renderItem={renderOrderTile}
+          />
+        )}
       </Container>
     </SafeAreaView>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
 import {Text, Platform} from 'react-native';
 
+import parseUploadImage from '~/utils/parseUploadImage';
+
 import {Container, AvatarPicture, Initials, InitialsText} from './styles';
 
 const initials = name => {
@@ -16,10 +18,7 @@ const initials = name => {
 
 export default function ProfileAvatar({profile, large = false}) {
   const {name, avatar} = profile;
-  const avatarUrl =
-    Platform.OS === 'ios'
-      ? avatar.url
-      : `http://192.168.0.6:3333/files/${avatar.path}`;
+  const avatarUrl = parseUploadImage(avatar);
   return (
     <Container>
       {avatar !== null ? (

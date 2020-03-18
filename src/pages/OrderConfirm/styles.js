@@ -1,23 +1,26 @@
 import styled from 'styled-components/native';
 import {RNCamera} from 'react-native-camera';
 import {Platform} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export const TakePictureButton = styled.TouchableOpacity`
-  background: #7159c1;
+  background: transparent;
   position: absolute;
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
   align-items: center;
+  justify-content: flex-end;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
   justify-content: center;
-  bottom: ${Platform.OS === 'ios' ? '20px' : '-30px'};
+  background: #7159c1;
   left: 50%;
-  margin-left: -30px;
+  margin-left: -35px;
+  bottom: ${Platform.OS === 'ios' ? '25px' : '0px'};
 `;
 
 export const CameraContainer = styled.View`
   border-radius: 4px;
-  margin-bottom: ${Platform.OS === 'ios' ? '20px' : '80px'};
+  margin-top: ${Platform.OS === 'ios' ? '0px' : '64px'};
   background: #fff;
   shadow-color: #000;
   shadow-offset: 0px 0px;

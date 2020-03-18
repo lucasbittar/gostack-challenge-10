@@ -34,12 +34,7 @@ export const LogoutButton = styled.TouchableOpacity`
   margin-left: auto;
 `;
 
-export const OrdersFlatList = styled.FlatList`
-  padding: 20px;
-  padding-top: 10px;
-  margin-top: 10px;
-  height: 80%;
-`;
+export const OrdersFlatList = styled.FlatList``;
 
 export const OrdersHeader = styled.View`
   margin-top: 20px;

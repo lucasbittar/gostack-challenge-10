@@ -4,7 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StatusBar, ActivityIndicator, Platform} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {RNCamera} from 'react-native-camera';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import parseUploadImage from '~/utils/parseUploadImage';
 
 import {orderUpdateRequest} from '~/store/modules/order/actions';
 import {statusbarUpdateColor} from '~/store/modules/statusbar/actions';
@@ -22,6 +25,7 @@ import {SubmitButton, SubmitButtonText} from '~/components/Layout';
 import {
   CameraContainer,
   TakePictureButton,
+  TakePictureIcon,
   SignatureCamera,
   PreviewSignature,
 } from './styles';
@@ -30,6 +34,7 @@ export default function OrderConfirm({route, navigation}) {
   const {order} = route.params;
   const [signature_id, setSignatureId] = useState(null);
   const [signatureImage, setSignatureImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const loading = useSelector(state => state.order.loading);
   const success = useSelector(state => state.order.success);
   const camera = useRef(null);
@@ -60,27 +65,31 @@ export default function OrderConfirm({route, navigation}) {
   }
 
   async function takePicture() {
+    setUploading(true);
     if (camera.current) {
-      const options = {quality: 0.8, base64: false};
-      const data = await camera.current.takePictureAsync(options);
-      const fileName = `signature-${format(
-        new Date(),
-        'MMddyyyyhhkkmmss',
-      )}.jpg`;
-      const signature = {
-        uri: data.uri,
-        type: 'image/jpeg',
-        name: fileName,
-      };
-      const file = new FormData();
-      file.append('file', signature);
-      const response = await api.post('/upload', file);
-      const signatureUrl =
-        Platform.OS === 'ios'
-          ? response.data.url
-          : `http://192.168.0.6:3333/files/${response.data.path}`;
-      setSignatureImage(signatureUrl);
-      setSignatureId(response.data.id);
+      try {
+        const options = {quality: 0.8, base64: false};
+        const data = await camera.current.takePictureAsync(options);
+        const fileName = `signature-${format(
+          new Date(),
+          'MMddyyyyhhkkmmss',
+        )}.jpg`;
+        const signature = {
+          uri: data.uri,
+          type: 'image/jpeg',
+          name: fileName,
+        };
+        const file = new FormData();
+        file.append('file', signature);
+        const response = await api.post('/upload', file);
+        const signatureUrl = parseUploadImage(response.data);
+        setSignatureImage(signatureUrl);
+        setSignatureId(response.data.id);
+        setUploading(false);
+      } catch (err) {
+        console.log('Something went wrong');
+        setUploading(false);
+      }
     }
   }
 
@@ -96,7 +105,11 @@ export default function OrderConfirm({route, navigation}) {
               type={RNCamera.Constants.Type.back}
             />
             <TakePictureButton onPress={takePicture}>
-              <Icon name="photo-camera" color="#FFF" size={26} />
+              {uploading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Icon name="photo-camera" color="#FFF" size={32} />
+              )}
             </TakePictureButton>
           </CameraContainer>
         ) : (
@@ -113,6 +126,12 @@ export default function OrderConfirm({route, navigation}) {
               ) : (
                 <SubmitButtonText>Confirm Delivery</SubmitButtonText>
               )}
+            </SubmitButton>
+            <SubmitButton
+              onPress={() => setSignatureId(null)}
+              style={{marginTop: 10}}
+              color="#999">
+              <SubmitButtonText>Take photo again</SubmitButtonText>
             </SubmitButton>
           </>
         )}

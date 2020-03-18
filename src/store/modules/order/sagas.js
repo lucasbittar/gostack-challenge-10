@@ -26,7 +26,12 @@ export function* fetchAllOrders({payload}) {
       },
     );
 
-    yield put(orderFetchAllSuccess(response.data));
+    const data = {
+      page,
+      response: response.data,
+    };
+
+    yield put(orderFetchAllSuccess(data));
   } catch (err) {
     errorHandling(err);
     yield put(orderFetchAllFailure());

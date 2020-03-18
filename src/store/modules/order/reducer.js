@@ -14,8 +14,15 @@ export default function order(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case '@order/FETCH_ALL_SUCCESS': {
-        draft.orders = action.payload.rows;
-        draft.ordersTotal = action.payload.count;
+        const {page, response} = action.payload;
+        draft.orders =
+          page >= 2 ? [...draft.orders, ...response.rows] : response.rows;
+        draft.ordersTotal = response.count;
+        draft.loading = false;
+        break;
+      }
+      case '@order/FETCH_ALL_REQUEST': {
+        draft.loading = true;
         break;
       }
       case '@order/FETCH_SUCCESS': {

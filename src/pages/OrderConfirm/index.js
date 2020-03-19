@@ -68,7 +68,13 @@ export default function OrderConfirm({route, navigation}) {
     setUploading(true);
     if (camera.current) {
       try {
-        const options = {quality: 0.8, base64: false};
+        const options = {
+          quality: 0.8,
+          base64: false,
+          width: 800,
+          forceUpOrientation: true,
+          fixOrientation: true,
+        };
         const data = await camera.current.takePictureAsync(options);
         const fileName = `signature-${format(
           new Date(),

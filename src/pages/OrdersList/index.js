@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import {StatusBar, Text, SafeAreaView} from 'react-native';
+import {StatusBar, Text, SafeAreaView, ActivityIndicator} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
@@ -33,6 +33,7 @@ import {orderFetchAllRequest} from '~/store/modules/order/actions';
 export default function OrdersList({navigation}) {
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
+  const [fetchingMore, setFetchingMore] = useState(false);
   const [ordersFilter, setOrdersFilter] = useState('pending');
   const user = useSelector(state => state.user.profile);
   const dispatch = useDispatch();
@@ -43,10 +44,12 @@ export default function OrdersList({navigation}) {
   function fetchMoreOrders() {
     // console.tron.log('ORDERS!', page, ordersTotal, orders.length);
     if (orders.length < ordersTotal) {
+      setFetchingMore(true);
       setPage(page + 1);
       // console.tron.log('FETCH MORE!');
       fetchOrders();
     } else {
+      setFetchingMore(false);
       // console.tron.log('LAST PAGE!');
     }
   }
@@ -145,6 +148,9 @@ export default function OrdersList({navigation}) {
             onRefresh={refreshOrders}
             onEndReachedThreshold={0.3}
             onEndReached={fetchMoreOrders}
+            ListFooterComponent={
+              fetchingMore && <ActivityIndicator color="#7d40e7" />
+            }
             ListEmptyComponent={
               <Text style={{color: '#999', fontSize: 12}}>
                 No orders were found

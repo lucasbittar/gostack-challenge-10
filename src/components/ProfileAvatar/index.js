@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Platform} from 'react-native';
+import PropTypes from 'prop-types';
 
 import parseUploadImage from '~/utils/parseUploadImage';
 
@@ -16,7 +16,7 @@ const initials = name => {
   return firstInitial;
 };
 
-export default function ProfileAvatar({profile, large = false}) {
+export default function ProfileAvatar({profile, large}) {
   const {name, avatar} = profile;
   const avatarUrl = parseUploadImage(avatar);
   return (
@@ -31,3 +31,14 @@ export default function ProfileAvatar({profile, large = false}) {
     </Container>
   );
 }
+
+ProfileAvatar.propTypes = {
+  profile: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    avatar: PropTypes.object,
+  }),
+};
+
+ProfileAvatar.defaultProps = {
+  large: false,
+};

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import {Animated} from 'react-native';
 import {format} from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -100,3 +101,9 @@ export default function OrderTile({index, order, navigation}) {
     </Animated.View>
   );
 }
+
+OrderTile.propTypes = {
+  index: PropTypes.number.isRequired,
+  order: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+};

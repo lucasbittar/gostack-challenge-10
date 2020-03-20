@@ -25,7 +25,6 @@ import {SubmitButton, SubmitButtonText} from '~/components/Layout';
 import {
   CameraContainer,
   TakePictureButton,
-  TakePictureIcon,
   SignatureCamera,
   PreviewSignature,
 } from './styles';

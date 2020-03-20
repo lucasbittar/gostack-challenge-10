@@ -93,7 +93,7 @@ export default function OrdersList({navigation}) {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#ff9900'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <Container>
         {user !== null && (
           <ProfileHeader>

@@ -1,7 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  color: '#ff9900',
+  color: '#fff',
 };
 
 export default function statusbar(state = INITIAL_STATE, action) {

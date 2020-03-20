@@ -74,7 +74,7 @@ export default function OrdersList({navigation}) {
 
       /* Fetch orders everytime view is loaded */
       fetchOrders();
-    }, [page, ordersFilter]),
+    }, [ordersFilter]),
   );
 
   function handleLogout() {

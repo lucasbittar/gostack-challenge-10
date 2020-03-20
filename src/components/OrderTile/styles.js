@@ -1,6 +1,9 @@
 import styled from 'styled-components/native';
+import {Platform} from 'react-native';
 
-export const OrderTileContainer = styled.TouchableOpacity`
+export const OrderTileContainer = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.6,
+})`
   margin-bottom: 30px;
   border-radius: 4px;
   background-color: #fff;
@@ -8,7 +11,8 @@ export const OrderTileContainer = styled.TouchableOpacity`
   shadow-offset: 0px 0px;
   shadow-opacity: 0.1;
   shadow-radius: 3px;
-  elevation: 2;
+  /* Add border color instead of shadow because it looks weird with animation */
+  border: ${Platform.OS === 'android' ? '2px solid rgba(0,0,0,.04)' : 'none'};
 `;
 
 export const OrderHeader = styled.View`

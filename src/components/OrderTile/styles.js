@@ -47,7 +47,7 @@ export const OrderFooterSmall = styled.Text`
 
 export const OrderFooterLarge = styled.Text`
   color: #444;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: bold;
 `;
 
